@@ -1,0 +1,242 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>添加用户名</title>
+    <style>
+        i{
+            font-style: normal;
+        }
+        h5 {
+            color: #aaa;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            background-color: #161619;
+            color: #EEE;
+        }
+
+        html {
+            position: relative;
+        }
+        body{
+            padding-top: 60px;
+        }
+        p {
+            font-size: 14px;
+            margin: 8px 0;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 18px;
+            margin: 20px 0 0;
+        }
+
+        input:checked + label {
+            border: 1px solid #eee;
+        }
+
+
+        .progress p {
+            padding: 0;
+            margin: 0 0 10px;
+            -webkit-transition: all 0.2s ease 0s;
+            transition: all 0.2s ease 0s;
+            position: relative;
+            line-height: 1.5;
+        }
+
+
+        #eos-price {
+            position: relative;
+            font-size: 18px;
+            margin-top: 8px;
+        }
+
+        #real-time-price {
+            font-size: 24px;
+        }
+
+        hr {
+            margin: 10px auto;
+            border: none;
+            border-top: 1px solid #666;
+        }
+
+
+        /* .bigone-list {
+            max-width: 500px;
+        } */
+
+        .big-list li,
+        .trade-list li,
+        .bigone-list li {
+            padding: 0 12px;
+            /* border-top: 1px solid #0f1118; */
+            color: #999eb1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bigone-list li {
+            border-top: 1px solid #171923;
+            padding: 8px 20px;
+            color: #eee;
+        }
+
+        .bigone-list li:nth-child(even) {
+            background: #2a2b3a
+        }
+
+
+        .real-time-normal {
+            color: #f79816;
+        }
+        .real-time {
+            color: #f79816;
+            animation: realtime 0.5s ease 0s 1 alternate;
+        }
+
+
+        @keyframes realtime
+        {
+            /* 0% {text-shadow: 0 0 0 #fff;}
+            80% {text-shadow: 1px 1px 10px #fff;}
+            100% {text-shadow: 0 0 0 #fff;} */
+
+            0% {color: #fff; text-shadow: 1px 1px 10px #fff;}
+            100% {color: #f79816; text-shadow: 0 0 0 #fff;}
+        }
+
+        @media screen and (min-width: 1024px) {
+
+            .bigone, 
+            .trade-history
+            {
+                width: 36%;
+            }
+            .big-one {
+                width: 28%;
+            }
+
+            .big-list,
+            .trade-list,
+            .bigone-list {
+                font-size: 14px;
+            }
+
+            .statics {
+                width: 100%;
+            }
+        }
+
+        @media screen and (max-width: 321px) {
+            .bigone, .trade-history {
+                padding-left: 0;
+            }
+            
+            .big-list li, .trade-list li {
+                padding: 4px;
+            }
+     
+
+            .from,
+            .buy,
+            .sell {
+                margin-left: 0;
+            }
+        }
+        .postion-center{
+            text-align: center;
+            font-size: 18px;
+        }
+        .input-container{
+            font-size: 18px;
+            margin-top: 4px;
+        }
+        .ram-info,.eos-info{
+            margin-top: 40px;
+        }
+        .ram-info-container{
+            text-align: center;
+            padding-top: 8px;
+        }
+        .ram-info-container>div{
+            display: inline-block;
+        }
+        .ram-info-container .left{
+            margin-right: 14px;
+        }
+        .alert{
+            color: #f70606;
+            animation: realtime 0.5s ease 0s 1 alternate;
+        }
+        .btn{
+            margin: 40px auto 0;
+            width: 100px;
+            height: 24px;
+            background-color: #fff;
+            border-radius: 0.8;
+            color: #000;
+            cursor: pointer;
+        }
+        .list{
+            margin: 40px auto 0;
+            width: 400px;
+            background-color: #fff;
+        }
+        .list-item{
+            overflow: hidden;
+            border-bottom: 1px solid #000;
+        }
+        .list-item>div{
+            float: left;
+            min-height: 30px;
+            font-size: 16px;
+            line-height: 30px;
+            text-align: center;
+            color: #000;
+            word-break:break-all;
+        }
+        .list-item-name{
+            width: 100px;
+        }
+        .list-item-url{
+            width: 299px;
+            border-left: 1px solid #000;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="input-container postion-center" id="lowPriceContainer">
+        <span>输入用户名</span>
+        <input type="text" placeholder="输入用户名" id="lowPrice">
+    </div>
+    <div class="input-container postion-center btn" id="btn">提交</div>
+    <div class="list">
+        <div class="list-item">
+            <div class="list-item-name">用户名</div>
+            <div class="list-item-url">对应链接</div>
+        </div>
+    </div>
+    <script src="/lib/jquery-3.3.1.min.js"></script>
+    <script>
+        var current = true;
+        $('#btn').on('click',function(){
+            var name = $('#lowPrice').val();
+            
+            if(current && name !== ''){
+                current = false;
+                $.get('http:addData/'+name,function(res){
+                    $('.list').append('<div class="list-item"><div class="list-item-name">'+name+'</div><div class="list-item-url">'+ res +'</div></div>')
+                    current = true;
+                })
+            }
+        })
+    </script>
+</body>
+</html>
