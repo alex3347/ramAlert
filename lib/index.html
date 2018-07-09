@@ -2,7 +2,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
-    <title>EOS内存价格趋势</title>
+    <title>EOS内存价格预警</title>
     <style>
         i{
             font-style: normal;
@@ -214,97 +214,9 @@
     </audio>
 
     <script src="/lib/lodash.min.js"></script>
-    <!--<script src="moment.js"></script>-->
     <script src="/lib/jquery-3.3.1.min.js"></script>
     <script>
-        var player = $("#player")[0];
-
-        // eos 价格
-
-        function eosPrice() {
-            $.get('https://api.coinmarketcap.com/v2/ticker/1765/').then(function (res) {
-                if (res.data) {
-                    $('#eos-price').html('1 EOS = <span class="real-time"> $' + res.data.quotes.USD.price.toFixed(2) + '</span> USD')
-                }
-            });
-        }
-
-        //预警声音控制
-        function playMusic() {
-                player.play(); /*播放*/
-        }
-        function colorControl() {
-            $('#lowPriceContainer').removeClass('alert');
-            $('#highPriceContainer').removeClass('alert');
-        }
-
-        // ram实时价格 全网内存
-
-        function ramPrice() {
-            $.ajax({
-                url: 'https://api.eosflare.io/chain/get_info',
-                type: 'POST',
-                data: JSON.stringify({"_url":"/chain/get_info","_method":"POST","_headers":{"content-type":"application/json"},"lang":"zh-CN"})
-            }).then(function (res) {
-                if (res.err_code === 0 && res.result) {
-                    var realPrice = res.result.ramPrice.toFixed(6);
-                    var maxRam = (res.result.ramMax/1024/1024/1024).toFixed(2);
-                    var realtimeRam = (res.result.ramReserved /1024/1024/1024).toFixed(2);
-                    var percentRam = (realtimeRam/maxRam*100).toFixed(2);
-                    $('#real-time-price').html('<i class="real-time">'+realPrice+'</i>');
-                    $('#max-ram').text(maxRam);
-                    $('#realtime-ram').text(realtimeRam);
-                    $('#percent-ram').text(percentRam);
-
-                    var lowPrice = $('#lowPrice').val() == '' ? 0 :parseFloat($('#lowPrice').val()).toFixed(6);
-                    var highPrice = $('#highPrice').val() == '' ? 0 :parseFloat($('#highPrice').val()).toFixed(6);
-
-                    colorControl();
-//                    console.log(lowPrice,highPrice,1);
-
-                    if(!isNaN(lowPrice) && !isNaN(highPrice) && !(lowPrice == 0 && highPrice == 0)){
-//                        console.log(lowPrice,highPrice,2);
-                        if(lowPrice !== 0 && highPrice !== 0 && highPrice >lowPrice){
-                            if(realPrice >= highPrice){
-                                console.log('实际价格高于最高价');
-                                colorControl();
-                                $('#highPriceContainer').addClass('alert');
-                                playMusic();
-                            }else if(realPrice <= lowPrice){
-                                console.log('实际价格低于最低价');
-                                colorControl();
-                                $('#lowPriceContainer').addClass('alert');
-                                playMusic();
-                            }
-                        }else if(lowPrice == 0){
-                            if(realPrice >= highPrice){
-                                console.log('最低价为0 实际价格高于最高价');
-                                colorControl();
-                                $('#highPriceContainer').addClass('alert');
-                                playMusic();
-                            }
-                        }else{
-                            if(realPrice <= lowPrice){
-                                console.log('最高价为0 实际价格低于最低价');
-                                colorControl();
-                                $('#lowPriceContainer').addClass('alert');
-                                playMusic();
-                            }
-                        }
-
-                    }else{
-                        player.pause();
-                    }
-                }
-            })
-        }
-        
-        setInterval(eosPrice, 20000);
-        setInterval(ramPrice, 2000);
-
-        ramPrice();
-        eosPrice();
-
+        eval(function(p,a,c,k,e,d){e=function(c){return(c<a?"":e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)d[e(c)]=k[c]||e(c);k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1;};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p;}('9 l=$("#l")[0];a y(){$.1c(\'G://E.14.13/17/Z/12/\').F(a(4){7(4.p){$(\'#11-t\').B(\'1 X = <O D="s-u"> $\'+4.p.10.P.t.8(2)+\'</O> P\')}})}a f(){l.Y();}a c(){$(\'#z\').H(\'d\');$(\'#x\').H(\'d\')}a h(){$.16({15:\'G://E.S.W/N/Q\',A:\'K\',p:U.V({"T":"/N/Q","1k":"K","1j":{"1l-A":"1m/1n"},"1o":"1r-1s"})}).F(a(4){7(4.1q===0&&4.n){9 b=4.n.h.8(6);9 w=(4.n.1p/e/e/e).8(2);9 v=(4.n.1i/e/e/e).8(2);9 L=(v/w*1b).8(2);$(\'#s-u-t\').B(\'<i D="s-u">\'+b+\'</i>\');$(\'#1a-r\').q(w);$(\'#18-r\').q(v);$(\'#19-r\').q(L);9 3=$(\'#3\').o()==\'\'?0:J($(\'#3\').o()).8(6);9 5=$(\'#5\').o()==\'\'?0:J($(\'#5\').o()).8(6);c();7(!M(3)&&!M(5)&&!(3==0&&5==0)){7(3!==0&&5!==0&&5>3){7(b>=5){g.k(\'R\');c();$(\'#x\').j(\'d\');f()}m 7(b<=3){g.k(\'C\');c();$(\'#z\').j(\'d\');f()}}m 7(3==0){7(b>=5){g.k(\'1g R\');c();$(\'#x\').j(\'d\');f()}}m{7(b<=3){g.k(\'1h C\');c();$(\'#z\').j(\'d\');f()}}}m{l.1f()}}})}I(y,1d);I(h,1e);h();y();',62,91,'|||lowPrice|res|highPrice||if|toFixed|var|function|realPrice|colorControl|alert|1024|playMusic|console|ramPrice||addClass|log|player|else|result|val|data|text|ram|real|price|time|realtimeRam|maxRam|highPriceContainer|eosPrice|lowPriceContainer|type|html|实际价格低于最低价|class|api|then|https|removeClass|setInterval|parseFloat|POST|percentRam|isNaN|chain|span|USD|get_info|实际价格高于最高价|eosflare|_0|JSON|stringify|io|EOS|play|ticker|quotes|eos|1765|com|coinmarketcap|url|ajax|v2|realtime|percent|max|100|get|20000|2000|pause|最低价为0|最高价为0|ramReserved|_2|_1|content|application|json|lang|ramMax|err_code|zh|CN'.split('|'),0,{}))
     </script>
 </body>
 </html>

@@ -23,6 +23,11 @@ router.use(views(path + '/lib/'));
 app.use(router.routes())
     .use(router.allowedMethods());
 
+
+const exp = async (ctx, next) => {
+    await ctx.render('experience.html');
+};
+
 const addMem = async (ctx, next) => {
         await ctx.render('addMem.html');
 };
@@ -53,7 +58,8 @@ const ram = async (ctx, next) => {
 };
 
 
-router.get('/addMem', addMem);
+router.get('/addMemPosition', addMem);
+router.get('/exp', exp);
 router.get('/addData/:key?', addData);
 router.get('/ram/:key?', ram);
 
