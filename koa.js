@@ -58,6 +58,6 @@ router.get('/addData/:key?', addData);
 router.get('/ram/:key?', ram);
 
 
-app.listen(3000, function () {
-    console.log('server start at 3000');
+app.listen(3006, function () {
+    console.log('server start at 3006');
 });
