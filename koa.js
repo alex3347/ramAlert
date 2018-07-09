@@ -37,7 +37,7 @@ const addData = async (ctx, next) => {
         ctx.response.body = '用户名已存在，请检查输入是否正确';
     }else{
         await test1.insert({ name:key});
-        ctx.response.body = 'http://localhost:3000/ram/'+key;
+        ctx.response.body = '47.99.39.198:3006/ram/'+key;
     }
 };
 
